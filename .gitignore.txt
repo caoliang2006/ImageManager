@@ -1,0 +1,7 @@
+main copy*.py
+build/
+dist/
+__pycache__/
+*.pyc
+.venv/
+venv/
