@@ -8,6 +8,10 @@ Find any image on your PC as easily as using your phone gallery.
 桌面看图软件大多靠翻文件夹，找图麻烦。  
 这个程序把手机相册的体验搬到 Windows：自动汇总、缩略图浏览、强大搜索。
 
+<img width="1402" height="832" alt="bandicam 2026-09-26 13-18-29-706" src="https://github.com/user-attachments/assets/5abc5189-ca5e-4f58-aedb-c056e00bac3b" />
+
+<img width="1402" height="832" alt="bandicam 2026-09-26 13-18-44-815" src="https://github.com/user-attachments/assets/5244e796-6a6d-4cb3-8066-bc6fc2df2ec5" />
+
 ## 亮点 / Highlights
 
 - **自动扫描本机（极快）**  
