@@ -39,6 +39,7 @@ from PySide6.QtGui import (
     QImageReader,
     QIcon,
     QColor,
+    QPalette,
     QPixmapCache,
     QDesktopServices,
     QFont,
@@ -46,7 +47,6 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import (
     QApplication,
     QMainWindow,
-    QFileDialog,
     QListView,
     QToolBar,
     QLabel,
@@ -932,8 +932,14 @@ class ThumbDelegate(QStyledItemDelegate):
         fm = painter.fontMetrics()
         elided = fm.elidedText(text, Qt.ElideMiddle, text_rect.width())
 
-        # 文件名统一白色
-        painter.setPen(QColor("#ffffff"))
+        # 文件名随系统主题颜色变化
+        app_palette = QApplication.palette()
+        if option.state & QStyle.State_Selected:
+            text_color = app_palette.color(QPalette.ColorRole.HighlightedText)
+        else:
+            text_color = app_palette.color(QPalette.ColorRole.Text)
+
+        painter.setPen(text_color)
         painter.drawText(text_rect, Qt.AlignHCenter | Qt.AlignVCenter, elided)
 
         painter.restore()
@@ -988,9 +994,6 @@ class MainWindow(QMainWindow):
         toolbar.setMovable(False)
         toolbar.setIconSize(QSize(16, 16))
         self.addToolBar(toolbar)
-
-        self.choose_action = toolbar.addAction("选择文件夹")
-        self.choose_action.triggered.connect(self.choose_folder)
 
         self.rescan_action = toolbar.addAction("重新扫描")
         self.rescan_action.triggered.connect(self.rescan)
@@ -1132,13 +1135,6 @@ class MainWindow(QMainWindow):
     def rescan(self):
         """重新扫描默认范围。"""
         self.start_scan(default_scan_roots())
-
-    def choose_folder(self):
-        """选择单个文件夹进行扫描。"""
-        folder = QFileDialog.getExistingDirectory(self, "选择图片文件夹")
-        if not folder:
-            return
-        self.start_scan([Path(folder)])
 
     def start_scan(self, roots: list[Path]):
         """启动一次新的扫描（会先停止旧扫描并清空模型）。"""
